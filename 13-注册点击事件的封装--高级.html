@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>qq</div>
+<p>aaa</p>
+<script>
+
+    var div = document.querySelector("div");
+    var p = document.querySelector("p");
+    /*下面这个获取绑定方式的方法只会调用一次*/
+    var register = createRegister()
+
+    register(div,"click",function(e){
+        console.log(this.innerHTML);
+        console.log('我点击了div');
+    });
+    register(p,"click",function(e){
+        console.log('我点击了p');
+    });
+
+    function createRegister (){
+        if(document.addEventListener){
+            return function (dom,type,callback){
+                dom.addEventListener(type,callback);
+            }
+        }else if(window.attachEvent){
+            /*在IE中，当事件绑定之后，this默认会指向全局的window.所以我们需要手动的来修改IE事件回调函数中的this*/
+            return function (dom,type,callback){
+                //dom.attachEvent("on"+type,callback);
+                dom.attachEvent("on"+type,function(){
+                    /*通过call来修改事件中的this
+                    * 不要忘记了将事件源处理参数手动传递回回调函数*/
+                    callback.call(dom,window.event);
+                });
+            }
+        }else{
+            return function (dom,type,callback){
+                dom["on"+type] = callback;
+            }
+        }
+    }
+</script>
+</body>
+</html>

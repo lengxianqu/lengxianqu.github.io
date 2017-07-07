@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>qq</div>
+<p>aaa</p>
+<script>
+    /*1.onclick:
+    *
+    * type:事件类型
+    * eventHandle:事件句柄：就是事件触发时的处理函数
+    * useCapture:是否在捕获阶段触发事件
+    *
+    * IE9以下不支持
+    * 2.addEventListener("click",function(){},true)
+    *
+    * IE6,7,8,9,10支持，其它不支持
+    * 3.attachEvent*/
+
+    var div = document.querySelector("div");
+    var p = document.querySelector("p");
+    /*registerEvent(div,"click",function(){
+        console.log('我点击了div');
+    });
+    registerEvent(p,"mouseover",function(){
+        console.log('鼠标移过了p');
+    });*/
+
+    /*下面这个获取绑定方式的方法只会调用一次*/
+    var register = createRegister()
+
+    register(div,"click",function(){
+        console.log('我点击了div');
+    });
+    register(p,"click",function(){
+        console.log('我点击了p');
+    });
+
+    function createRegister (){
+        if(document.addEventListener){
+            return function (dom,type,callback){
+                dom.addEventListener(type,callback);
+            }
+        }else if(window.attachEvent){
+            return function (dom,type,callback){
+                dom.attachEvent("on"+type,callback);
+            }
+        }else{
+            return function (dom,type,callback){
+                dom["on"+type] = callback;
+            }
+        }
+    }
+
+
+    /*function registerEvent(dom,type,callback){
+        /!*绑定：兼容处理*!/
+        if(dom.addEventListener){
+            dom.addEventListener(type,function(){
+                callback && callback();
+            })
+        }else if(dom.attachEvent){
+            dom.attachEvent("on"+type,function(){
+                callback && callback();
+            })
+        }else{
+            dom["on"+type] = function(){
+                callback && callback();
+            }
+        }
+    }*/
+</script>
+</body>
+</html>

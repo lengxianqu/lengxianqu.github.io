@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/tab.css">
+</head>
+<body>
+<div class="wrapper" id="wrapper">
+    <ul class="tab" id="tab-menu">
+        <li class="tab-item active">国际大牌<span>◆</span></li>
+        <li class="tab-item">国妆名牌<span>◆</span></li>
+        <li class="tab-item">清洁用品<span>◆</span></li>
+        <li class="tab-item">男士精品</li>
+    </ul>
+    <div class="products" id="tab-main">
+        <div class="main selected">
+            <a href="###"><img src="../images/guojidapai.jpg" alt=""/></a>
+        </div>
+        <div class="main">
+            <a href="###"><img src="../images/guozhuangmingpin.jpg" alt=""/></a>
+        </div>
+        <div class="main">
+            <a href="###"><img src="../images/qingjieyongpin.jpg" alt=""/></a>
+        </div>
+        <div class="main">
+            <a href="###"><img src="../images/nanshijingpin.jpg" alt=""/></a>
+        </div>
+    </div>
+</div>
+
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script>
+    function MyTab(option) {
+        console.log(123);
+        this.tabMenu = null;
+        this.tabMain = null;
+
+        this.getEles(option);
+        this.registerEvent(option);
+    };
+    MyTab.prototype = {
+        getEles:function(option) {
+            console.log(456);
+            this.tabMenu = document.querySelector("#" + option["tabMenu"]).children;
+            this.tabMain = document.querySelector("#" + option["tabMain"]).children;
+        },
+        registerEvent:function(option){
+            // 循环点击注册事件
+            var that = this;
+            for(var i = 0;i<this.tabMenu.length;i++){
+                var menu = this.tabMenu[i];
+                menu.index = i;
+                menu.onclick = function(){
+                    // 其它含有active的移除，当前的显示
+                    document.querySelector(".active").classList.remove("active");
+                    this.classList.add("active");
+                    // 其它含有selected的隐藏，当前显示
+                    document.querySelector(".selected").classList.remove("selected");
+                    that.tabMain[this.index].classList.add("selected");
+                }
+            }
+        }
+    }
+    console.log(MyTab.prototype);
+</script>
+<script>
+   var tab = new MyTab({
+        /*标签页导航项*/
+        tabMenu: "tab-menu",
+        /*标签页内容面板*/
+        tabMain: "tab-main",
+        /*自动轮播*/
+        autoPlay: true
+    });
+</script>
+</body>
+</html>

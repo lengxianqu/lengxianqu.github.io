@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/tab.css">
+</head>
+<body>
+<div class="wrapper" id="wrapper">
+    <ul class="tab" id="tab-menu">
+        <li class="tab-item active">国际大牌<span>◆</span></li>
+        <li class="tab-item">国妆名牌<span>◆</span></li>
+        <li class="tab-item">清洁用品<span>◆</span></li>
+        <li class="tab-item">男士精品</li>
+    </ul>
+    <div class="products" id="tab-main">
+        <div class="main selected">
+            <a href="###"><img src="../images/guojidapai.jpg" alt=""/></a>
+        </div>
+        <div class="main">
+            <a href="###"><img src="../images/guozhuangmingpin.jpg" alt=""/></a>
+        </div>
+        <div class="main">
+            <a href="###"><img src="../images/qingjieyongpin.jpg" alt=""/></a>
+        </div>
+        <div class="main">
+            <a href="###"><img src="../images/nanshijingpin.jpg" alt=""/></a>
+        </div>
+    </div>
+</div>
+
+<script src="../js/jquery-1.7.2.min.js"></script>
+<script>
+    /*1.获取所有用于点击的li标签*/
+    var lis = $("#tab-menu > li");
+    /*2.循环绑定点击事件*/
+    lis.on("click",function(){
+        /*3.为当前被点击的li元素添加active样式--排他*/
+        $(this).addClass("active").siblings().removeClass("active");
+        /*4.让当前li元素对应的内容面板显示--排他*/
+        var index = $(this).index(); //导航项与内容面板的索引对应
+        $("#tab-main > div").removeClass("selected").eq(index).addClass("selected");
+    });
+
+    var tab = new Tab();
+</script>
+</body>
+</html>

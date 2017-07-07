@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>qq</div>
+<p>aaa</p>
+<script>
+    /*1.onclick:
+    *
+    * type:事件类型
+    * eventHandle:事件句柄：就是事件触发时的处理函数
+    * useCapture:是否在捕获阶段触发事件
+    *
+    * IE9以下不支持
+    * 2.addEventListener("click",function(){},true)
+    *
+    * IE6,7,8,9,10支持，其它不支持
+    * 3.attachEvent*/
+
+    var div = document.querySelector("div");
+    /*绑定：兼容处理*/
+    if(div.addEventListener){
+        div.addEventListener("click",function(){
+            console.log('我点击了div1');
+        })
+    }else if(div.attachEvent){
+        div.attachEvent("onclick",function(){
+            console.log('我点击了div2');
+        })
+    }else{
+        div.onclick = function(){
+            console.log('我点击了div3');
+        }
+    }
+</script>
+</body>
+</html>
